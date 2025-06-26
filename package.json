@@ -1,0 +1,35 @@
+{
+  "name": "60s",
+  "type": "module",
+  "version": "2.15.2",
+  "updateTime": "2025/06/17 09:33:13",
+  "packageManager": "pnpm@10.12.1",
+  "dependencies": {
+    "@oak/oak": "npm:@jsr/oak__oak@^17.1.4"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.4",
+    "@types/node": "^22.13.9",
+    "bumpp": "^10.0.3",
+    "typescript": "^5.8.2",
+    "prettier": "^3.5.3",
+    "wrangler": "0.0.0-f276a9cbe"
+  },
+  "scripts": {
+    "dev": "DEV=1 PORT=4398 node --no-warnings --experimental-transform-types --watch --env-file=.env node.ts",
+    "start": "PORT=4398 node --no-warnings --experimental-transform-types --env-file=.env node.ts",
+    "prerelease": "node --no-warnings --experimental-transform-types ./scripts/write-update-time.ts && git add . && git commit -m 'chore: update time in package.json'",
+    "release": "bumpp",
+    "update-lockfile": "bun install && deno install --allow-scripts && pnpm install",
+    "docker:build": "docker build -t vikiboss/60s .",
+    "docker:run": "docker run --name 60s -p 4399:4399 -d vikiboss/60s",
+    "docker:re-run": "docker stop 60s && docker rm 60s && pnpm run docker:run"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp",
+      "workerd"
+    ]
+  }
+}
